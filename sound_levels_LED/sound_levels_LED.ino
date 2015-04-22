@@ -47,26 +47,7 @@ void loop()
     }
     
     peak_to_peak = max_level - min_level;
-    // The microphone's Vcc is connected to Arduino's 3.3V. If you choose to connect it to 5V
-    // remember to also change the value below, for a correct conversion. 
-    vpp = (peak_to_peak * 3.3) / 1023;
-    
-    Serial.println(vpp);
-    
-    if (vpp < 1) {
-        light_LED(G_led);
-    } else if ((vpp > 1) && (vpp < 1.8)) {
-        light_LED(Y_led);
-    } else if (vpp > 1.8) {
-        light_LED(R_led);
-    }
-}
-
-void light_LED (int LED)
-{
-    digitalWrite(LED, HIGH);
-    delay(150);
-    digitalWrite(LED, LOW);
+    Serial.println(peak_to_peak);
 }
 
 
