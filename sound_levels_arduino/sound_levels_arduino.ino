@@ -42,16 +42,18 @@ void loop()
   while (millis() - loop_start < sample_window) {
     sample = analogRead(0) - 512; // the mic is connected to Arduino's AI pin no. 0
     // we calculate the values relative to the level 512
-    if (i < SIZE)
-      sample_vector[i] = sample;
+    //if (i < SIZE)
+    //  sample_vector[i] = sample;
     
     power += sample * sample;
     i++;
   }
    
   power = power / i + 1;
-  Serial.println("number samples: ");   
-  Serial.println(i);
+  
+  Serial.println(power);
+  //Serial.println("number samples: ");   
+  // Serial.println(i);
   /*
   for (i = 0; i < SIZE; i++) {
     Serial.println(sample_vector[i]);
