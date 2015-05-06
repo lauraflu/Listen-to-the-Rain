@@ -1,10 +1,12 @@
+#include <SoftwareSerial.h>
 #define SIZE 800
+
+SoftwareSerial xbee(2, 3);
 
 const int sample_window = 1000; // this is the size of the sample window in ms
 int sample; // stores the level of a measured sample
 unsigned int i = 0;
-double power = 0;
-int sample_vector[SIZE];
+char str[10];
 
 // Define various ADC prescaler
 // The ADC clock needs  to be between 50 kHz and 200  kHz for 10 bit accuracy.
@@ -23,6 +25,9 @@ const unsigned char PS_128 = (1 << ADPS2) | (1 << ADPS1) | (1 << ADPS0);
 void setup()
 {
     Serial.begin(9600);
+    xbee.begin(9600);
+    
+    pinMode(10, OUTPUT);
     
     // set up the ADC
     ADCSRA &= ~PS_128;  // remove bits set by Arduino library
@@ -41,25 +46,15 @@ void loop()
   unsigned long loop_start = millis();
   while (millis() - loop_start < sample_window) {
     sample = analogRead(0) - 512; // the mic is connected to Arduino's AI pin no. 0
-    // we calculate the values relative to the level 512
-    //if (i < SIZE)
-    //  sample_vector[i] = sample;
-    
     power += sample * sample;
     i++;
   }
    
-  power = power / i + 1;
-  
+  power = power / (i + 1); 
   Serial.println(power);
-  //Serial.println("number samples: ");   
-  // Serial.println(i);
-  /*
-  for (i = 0; i < SIZE; i++) {
-    Serial.println(sample_vector[i]);
-  }
-  */
-  // send the value of the power over wireless to the second Arduino 
+  
+  // not sure if it works yet
+  sprintf(str, "%f", power);  
+
+  xbee.write(str);
 }
-
-
