@@ -6,7 +6,7 @@ SoftwareSerial xbee(2, 3);
 const int sample_window = 1000; // this is the size of the sample window in ms
 int sample; // stores the level of a measured sample
 unsigned int i = 0;
-char str[10];
+
 
 // Define various ADC prescaler
 // The ADC clock needs  to be between 50 kHz and 200  kHz for 10 bit accuracy.
@@ -21,6 +21,7 @@ char str[10];
 
 const unsigned char PS_64 = (1 << ADPS2) | (1 << ADPS1);
 const unsigned char PS_128 = (1 << ADPS2) | (1 << ADPS1) | (1 << ADPS0);
+float power = 0;
 
 void setup()
 {
@@ -51,10 +52,8 @@ void loop()
   }
    
   power = power / (i + 1); 
-  Serial.println(power);
-  
-  // not sure if it works yet
-  sprintf(str, "%f", power);  
-
-  xbee.write(str);
+  int power_convert = ((int)power) / 10;
+  Serial.println(power_convert);
+  int x = 1023;
+  xbee.write(x);
 }
