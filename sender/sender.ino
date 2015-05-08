@@ -1,5 +1,6 @@
 #include <SoftwareSerial.h>
-#define SIZE 800
+#define SOP '<'
+#define EOP '>'
 
 SoftwareSerial xbee(2, 3);
 
@@ -39,8 +40,6 @@ void loop()
 {
   // millis() is a function that returns the number of milliseconds since the program
   // started, as an unsigned long
-  
-//  Serial.println("Say something");
 
   i = 0;
   power = 0;
@@ -51,9 +50,9 @@ void loop()
     i++;
   }
    
-  power = power / (i + 1); 
-  int power_convert = ((int)power) / 10;
-  Serial.println(power_convert);
-  int x = 1023;
-  xbee.write(x);
+  power = power / (i + 1);
+ 
+  xbee.print(SOP);
+  xbee.print(power);
+  xbee.print(EOP);
 }
