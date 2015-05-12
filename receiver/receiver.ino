@@ -11,8 +11,8 @@
 #define SOP '<'
 #define EOP '>'
 
-TM1637 disp(CLK,DIO); //D7 & D8
-SeeedLedBar bar(A4, A5); //clock & data
+TM1637 disp(CLK,DIO); //D7 & D8 
+SeeedLedBar bar(A4, A5); //clock & data of the led bar
 SoftwareSerial xbee(2,3); //rx, tx
 void light_leds(int);
 void digit_display(int);
