@@ -22,7 +22,7 @@ unsigned int i = 0;
 
 const unsigned char PS_64 = (1 << ADPS2) | (1 << ADPS1);
 const unsigned char PS_128 = (1 << ADPS2) | (1 << ADPS1) | (1 << ADPS0);
-float power = 0;
+float energy = 0;
 
 void setup()
 {
@@ -42,17 +42,17 @@ void loop()
   // started, as an unsigned long
 
   i = 0;
-  power = 0;
+  energy = 0;
   unsigned long loop_start = millis();
   while (millis() - loop_start < sample_window) {
     sample = analogRead(0) - 512; // the mic is connected to Arduino's AI pin no. 0
-    power += sample * sample;
+    energy += sample * sample;
     i++;
   }
    
-  power = power / (i + 1);
+  energy = energy / (i + 1);
  
   xbee.print(SOP);
-  xbee.print(power);
+  xbee.print(energy);
   xbee.print(EOP);
 }

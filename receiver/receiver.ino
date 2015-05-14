@@ -28,8 +28,8 @@ void setup()
 
 char val;
 char str[10];
-float power;
-int power_i;
+float energy;
+int energy_i;
 bool starts = false;
 bool ends = false;
 int i = 0;
@@ -60,10 +60,10 @@ void loop() {
         starts = false;
         ends = false;
         i = 0;
-        power = atof(str);
-        power_i = (int)power;
-        light_leds(power_i);
-        digit_display(power_i);
+        energy = atof(str);
+        energy_i = (int)energy;
+        light_leds(energy_i);
+        digit_display(energy_i);
         str[i] = '\0';
     }
 }
